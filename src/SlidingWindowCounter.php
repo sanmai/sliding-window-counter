@@ -32,7 +32,7 @@ use function sprintf;
 /**
  * Sliding window counter and time series.
  */
-class SlidingWindowCounter
+final class SlidingWindowCounter
 {
     /** @var string Memcached cache name to use for buckets. */
     private string $cache_name;

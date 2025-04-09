@@ -27,7 +27,7 @@ use function is_int;
 /**
  * A WordPress object cache adapter for the sliding window counter.
  */
-class WPCacheAdapter implements CounterCache
+final class WPCacheAdapter implements CounterCache
 {
     /**
      * The WordPress object cache instance.

@@ -28,7 +28,7 @@ use function max;
 /**
  * Handles timestamp generation for the sliding window counter.
  */
-class FrameBuilder
+final class FrameBuilder
 {
     /** @var int<1, max> The size of the window in seconds. */
     private int $window_size;
