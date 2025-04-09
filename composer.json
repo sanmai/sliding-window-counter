@@ -22,7 +22,7 @@
         "johnpbloch/wordpress-core": "^6.2",
         "phan/phan": ">=1.1",
         "phpstan/phpstan": ">=0.10",
-        "phpunit/phpunit": ">=9.4",
+        "phpunit/phpunit": ">=9.4 <12",
         "vimeo/psalm": ">=2"
     },
     "autoload": {
