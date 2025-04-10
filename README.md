@@ -39,11 +39,11 @@ Here's how it should be used:
 ```php
 // Configure a counter to work in hourly buckets, for the last 24 hours
 // and using the Memcached adapter.
-$counter = new \Automattic\SlidingWindowCounter\SlidingWindowCounter(
-    'my-counters',
-    3600,
-    3600 * 24,
-    new \Automattic\SlidingWindowCounter\Cache\MemcachedAdapter($memcached)
+$counter = new \SlidingWindowCounter\SlidingWindowCounter(
+    'my-counters', // the cache key prefix
+    3600, // hourly buckets
+    3600 * 24, // 24 hours
+    new \SlidingWindowCounter\Cache\MemcachedAdapter($memcached)
 );
 
 // Increment the counter when a certain event happens.
@@ -73,13 +73,17 @@ $variance->getMean();
 $variance->getStandardDeviation();
 ```
 
+The `detectAnomaly()` also accepts parameters for sensitivity and start time. The default sensitivity is 2, which means that the result will be considered an anomaly if it is more than two standard deviations away from the mean. The start time is optional and can be used to specify the beginning of the observation period.
+
+### Adapters
+
 There's also a handy adapter for the Memcached-backed `WP_Object_Cache`:
 
 ```php
-$counter = new \Automattic\SlidingWindowCounter\SlidingWindowCounter(
+$counter = new \SlidingWindowCounter\SlidingWindowCounter(
     'my-counters',
     3600,
     3600 * 24,
-    new \Automattic\SlidingWindowCounter\Cache\WPCacheAdapter($wp_object_cache)
+    new \SlidingWindowCounter\Cache\WPCacheAdapter($wp_object_cache)
 );
 ```
