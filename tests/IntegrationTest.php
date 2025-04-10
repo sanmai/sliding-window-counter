@@ -23,6 +23,7 @@ namespace Tests\SlidingWindowCounter;
 use PHPUnit\Framework\TestCase;
 use SlidingWindowCounter\SlidingWindowCounter;
 use SlidingWindowCounter\Cache\MemcachedAdapter;
+use Memcached;
 
 use function bin2hex;
 use function ceil;
@@ -30,7 +31,6 @@ use function rand;
 use function random_bytes;
 use function range;
 use function time;
-use Memcached;
 
 /**
  * @internal
