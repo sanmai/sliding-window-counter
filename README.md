@@ -1,7 +1,7 @@
 # Sliding Window Counter
 
 ```
-composer require automattic/sliding-window-counter
+composer require sanmai/sliding-window-counter
 ```
 
 ## What's this all about?
@@ -29,6 +29,8 @@ But if logical and material frames are not aligned (the end of the last material
 - And we use portions of underlying material frames for every other logical frame.
 
 And there are many edge cases: for example, if we don't specify the anomaly detection start time, we discard all heading null values. But for relatively rare events, it might make sense to keep every empty frame, so there's an option to specify the start time.
+
+> This library is an unaffiliated fork of a [library from Automattic](https://github.com/Automattic/sliding-window-counter).
 
 ## The API
 
