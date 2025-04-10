@@ -197,6 +197,7 @@ class RedisAdapter implements CounterCache
         return is_numeric($value) ? (int)$value : null;
     }
 }
+```
 
 ## Technical Details (for the curious)
 
