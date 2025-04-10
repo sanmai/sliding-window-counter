@@ -30,6 +30,7 @@ use function rand;
 use function random_bytes;
 use function range;
 use function time;
+use Memcached;
 
 /**
  * @internal
