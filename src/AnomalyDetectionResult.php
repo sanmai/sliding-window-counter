@@ -18,7 +18,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Automattic\SlidingWindowCounter;
+namespace SlidingWindowCounter;
 
 use function abs;
 use function array_map;

@@ -18,13 +18,13 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Tests\Automattic\SlidingWindowCounter;
+namespace Tests\SlidingWindowCounter;
 
-use Automattic\SlidingWindowCounter\AnomalyDetectionResult;
+use SlidingWindowCounter\AnomalyDetectionResult;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Automattic\SlidingWindowCounter\AnomalyDetectionResult
+ * @covers \SlidingWindowCounter\AnomalyDetectionResult
  *
  * @internal
  */

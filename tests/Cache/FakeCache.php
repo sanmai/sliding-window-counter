@@ -18,9 +18,11 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Tests\Automattic\SlidingWindowCounter\Cache;
+namespace Tests\SlidingWindowCounter\Cache;
 
-class FakeCache implements \Automattic\SlidingWindowCounter\Cache\CounterCache
+use SlidingWindowCounter\Cache\CounterCache;
+
+class FakeCache implements CounterCache
 {
     private array $cache = [];
 

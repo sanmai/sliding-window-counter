@@ -18,16 +18,16 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Tests\Automattic\SlidingWindowCounter\Cache;
+namespace Tests\SlidingWindowCounter\Cache;
 
-use Automattic\SlidingWindowCounter\Cache\MemcachedAdapter;
+use SlidingWindowCounter\Cache\MemcachedAdapter;
 use Memcached;
 use PHPUnit\Framework\TestCase;
 
 /**
  * @internal
  *
- * @covers \Automattic\SlidingWindowCounter\Cache\MemcachedAdapter
+ * @covers \SlidingWindowCounter\Cache\MemcachedAdapter
  */
 final class MemcachedAdapterTest extends TestCase
 {

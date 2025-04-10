@@ -18,10 +18,10 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Tests\Automattic\SlidingWindowCounter\Helper;
+namespace Tests\SlidingWindowCounter\Helper;
 
-use Automattic\SlidingWindowCounter\Helper\Frame;
-use Automattic\SlidingWindowCounter\Helper\FrameBuilder;
+use SlidingWindowCounter\Helper\Frame;
+use SlidingWindowCounter\Helper\FrameBuilder;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Tumblr\Chorus\FakeTimeKeeper;
@@ -31,7 +31,7 @@ use function min;
 use function Pipeline\take;
 
 /**
- * @covers \Automattic\SlidingWindowCounter\Helper\FrameBuilder
+ * @covers \SlidingWindowCounter\Helper\FrameBuilder
  *
  * @internal
  */

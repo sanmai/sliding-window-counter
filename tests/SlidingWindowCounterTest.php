@@ -18,15 +18,15 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Tests\Automattic\SlidingWindowCounter;
+namespace Tests\SlidingWindowCounter;
 
-use Automattic\SlidingWindowCounter\Cache\CounterCache;
-use Automattic\SlidingWindowCounter\Helper\Frame;
-use Automattic\SlidingWindowCounter\SlidingWindowCounter;
+use SlidingWindowCounter\Cache\CounterCache;
+use SlidingWindowCounter\Helper\Frame;
+use SlidingWindowCounter\SlidingWindowCounter;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use ReflectionMethod;
-use Tests\Automattic\SlidingWindowCounter\Cache\FakeCache;
+use Tests\SlidingWindowCounter\Cache\FakeCache;
 use Tumblr\Chorus\FakeTimeKeeper;
 
 use function array_keys;
@@ -37,7 +37,7 @@ use function range;
 use function sprintf;
 
 /**
- * @covers \Automattic\SlidingWindowCounter\SlidingWindowCounter
+ * @covers \SlidingWindowCounter\SlidingWindowCounter
  *
  * @internal
  */

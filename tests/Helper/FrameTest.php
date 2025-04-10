@@ -18,9 +18,9 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Tests\Automattic\SlidingWindowCounter\Helper;
+namespace Tests\SlidingWindowCounter\Helper;
 
-use Automattic\SlidingWindowCounter\Helper\Frame;
+use SlidingWindowCounter\Helper\Frame;
 use PHPUnit\Framework\TestCase;
 
 use function array_keys;
@@ -32,7 +32,7 @@ use function range;
 /**
  * Test for Frame.
  *
- * @covers \Automattic\SlidingWindowCounter\Helper\Frame
+ * @covers \SlidingWindowCounter\Helper\Frame
  *
  * @internal
  */
