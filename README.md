@@ -3,6 +3,8 @@
 [![Latest Stable Version](https://img.shields.io/packagist/v/sanmai/sliding-window-counter.svg)](https://packagist.org/packages/sanmai/sliding-window-counter)
 [![License](https://img.shields.io/badge/license-GPL--2.0-blue.svg)](https://github.com/sanmai/sliding-window-counter/blob/master/LICENSE)
 
+## Short-lived cache-backed time series with anomaly detection
+
 A lightweight, efficient PHP library for tracking time-based events and detecting anomalies without the overhead of databases or logs.
 
 ## Table of Contents
