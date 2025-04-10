@@ -37,9 +37,10 @@ Ever needed to track how many times something happens over time and spot when th
 ## Features
 
 ✅ **Lightweight** - Uses your existing cache infrastructure
-✅ **Fast** - No database queries or log parsing
-✅ **Statistical anomaly detection** - Based on standard deviations
-✅ **Flexible time windows** - Configure to your needs
+
+✅ **Fast** - No database queries or log parsing<br>
+✅ **Statistical anomaly detection** - Based on standard deviations<br>
+✅ **Flexible time windows** - Configure to your needs<br>
 ✅ **Production-ready** - Originally [developed at Automattic for Tumblr](https://github.com/Automattic/sliding-window-counter)
 
 ## How it works (the simple version)
