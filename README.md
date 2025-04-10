@@ -134,7 +134,7 @@ $result = $counter->detectAnomaly($_SERVER['REMOTE_ADDR']);
 // Lower sensitivity (3 standard deviations) - only extreme outliers
 $result = $counter->detectAnomaly($_SERVER['REMOTE_ADDR'], 3);
 
-// Extremely low sensitivity (5 standard deviations) - only absolutely hideous anomalies
+// Extremely low sensitivity (5 standard deviations) - only detects extreme outliers
 $result = $counter->detectAnomaly($_SERVER['REMOTE_ADDR'], 5);
 ```
 
