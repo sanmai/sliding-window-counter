@@ -18,7 +18,19 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+namespace Tests\SlidingWindowCounter;
+
 use PHPUnit\Framework\TestCase;
+use SlidingWindowCounter\SlidingWindowCounter;
+use SlidingWindowCounter\Cache\MemcachedAdapter;
+use Memcached;
+
+use function bin2hex;
+use function ceil;
+use function rand;
+use function random_bytes;
+use function range;
+use function time;
 
 /**
  * @internal
@@ -57,11 +69,11 @@ final class IntegrationTest extends TestCase
         $memcached = new Memcached();
         $memcached->addServer('127.0.0.1', 11211);
 
-        $counter = new \Automattic\SlidingWindowCounter\SlidingWindowCounter(
+        $counter = new SlidingWindowCounter(
             'my-counters',
             60,
             3600,
-            new \Automattic\SlidingWindowCounter\Cache\MemcachedAdapter($memcached)
+            new MemcachedAdapter($memcached)
         );
 
         $now = time();

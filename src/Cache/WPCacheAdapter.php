@@ -18,7 +18,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Automattic\SlidingWindowCounter\Cache;
+namespace SlidingWindowCounter\Cache;
 
 use WP_Object_Cache;
 

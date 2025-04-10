@@ -18,7 +18,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Automattic\SlidingWindowCounter\Helper;
+namespace SlidingWindowCounter\Helper;
 
 use function implode;
 use function intdiv;

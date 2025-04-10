@@ -18,16 +18,16 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-namespace Tests\Automattic\SlidingWindowCounter\Cache;
+namespace Tests\SlidingWindowCounter\Cache;
 
-use Automattic\SlidingWindowCounter\Cache\WPCacheAdapter;
+use SlidingWindowCounter\Cache\WPCacheAdapter;
 use PHPUnit\Framework\TestCase;
 use WP_Object_Cache;
 
 /**
  * @internal
  *
- * @covers \Automattic\SlidingWindowCounter\Cache\WPCacheAdapter
+ * @covers \SlidingWindowCounter\Cache\WPCacheAdapter
  */
 final class WPCacheAdapterTest extends TestCase
 {
