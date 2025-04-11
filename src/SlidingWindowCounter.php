@@ -69,8 +69,8 @@ final class SlidingWindowCounter
         int $window_size,
         int $observation_period,
         Cache\CounterCache $counter_cache,
-        Chorus\TimeKeeper $time_keeper = null,
-        Helper\FrameBuilder $frame_builder = null
+        ?Chorus\TimeKeeper $time_keeper = null,
+        ?Helper\FrameBuilder $frame_builder = null
     ) {
         if ('' === $cache_name) {
             throw new InvalidArgumentException('Cache name expected to be a non-blank string');

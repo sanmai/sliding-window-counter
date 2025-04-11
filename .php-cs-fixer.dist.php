@@ -61,6 +61,7 @@ $config
         'declare_equal_normalize' => ['space' => 'none'],
         'blank_line_after_opening_tag' => false,
         'linebreak_after_opening_tag' => false,
+        'nullable_type_declaration_for_default_null_value' => true,
     ])
     ->setFinder(
         PhpCsFixer\Finder::create()
