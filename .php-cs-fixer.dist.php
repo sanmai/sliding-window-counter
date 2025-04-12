@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 /**
- * The Sliding Window Counter, a short-lived time series library.
  * Copyright 2023 Automattic, Inc.
+ * Copyright 2025 Alexey Kopytko
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -19,8 +19,8 @@
  */
 
 $header = <<<'EOF'
-The Sliding Window Counter, a short-lived time series library.
 Copyright 2023 Automattic, Inc.
+Copyright 2025 Alexey Kopytko
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
