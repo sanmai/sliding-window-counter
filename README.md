@@ -167,7 +167,25 @@ $adapter = new MemcachedAdapter($memcached);
 // For WordPress sites (uses WP's object cache)
 use SlidingWindowCounter\Cache\WPCacheAdapter;
 $adapter = new WPCacheAdapter($wp_object_cache);
+
+// For Symfony Cache with atomic counters
+use SlidingWindowCounter\Cache\SymfonyCounterAdapter;
+use Symfony\Component\Cache\Adapter\MemcachedAdapter as SymfonyMemcachedAdapter;
+
+// Create a Symfony Cache adapter
+$memcached = new \Memcached();
+$memcached->addServer('localhost', 11211);
+$symfony_adapter = new SymfonyMemcachedAdapter($memcached);
+
+// Use it with the sliding window counter
+$adapter = new SymfonyCounterAdapter($symfony_adapter);
 ```
+
+The Symfony adapter supports any cache that implements `CounterAdapterInterface`, including:
+- `MemcachedAdapter`
+- `RedisAdapter`
+- `ApcuAdapter`
+- `FilesystemAdapter` (not recommended for production)
 
 ### Creating Your Own Adapter
 
@@ -176,27 +194,23 @@ Need to use a different cache system? Implementing a custom adapter is straightf
 ```php
 use SlidingWindowCounter\Cache\CounterCache;
 
-class RedisAdapter implements CounterCache 
+class YourCustomAdapter implements CounterCache
 {
-    private $redis;
+    private $cache_implementation;
     
-    public function __construct(Redis $redis) 
+    public function __construct($cache_implementation)
     {
-        $this->redis = $redis;
+        $this->cache_implementation = $cache_implementation;
     }
     
     public function increment(string $cache_name, string $cache_key, int $ttl, int $step)
     {
-        $key = "{$cache_name}:{$cache_key}";
-        $this->redis->setnx($key, 0); // Create if not exists
-        $this->redis->expire($key, $ttl);
-        return $this->redis->incrby($key, $step);
+        // Implement increment logic
     }
     
     public function get(string $cache_name, string $cache_key): ?int
     {
-        $value = $this->redis->get("{$cache_name}:{$cache_key}");
-        return is_numeric($value) ? (int)$value : null;
+        // Implement get logic
     }
 }
 ```

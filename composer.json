@@ -14,6 +14,9 @@
         "sanmai/pipeline": "^6.11",
         "tumblr/chorus-timekeeper": "^0.1"
     },
+    "suggest": {
+        "symfony/cache": "To use SymfonyCounterAdapter for atomic counter operations"
+    },
     "require-dev": {
         "ext-memcached": "*",
         "ergebnis/composer-normalize": "^2.8",
@@ -23,6 +26,7 @@
         "phan/phan": ">=1.1",
         "phpstan/phpstan": ">=0.10",
         "phpunit/phpunit": ">=9.4 <12",
+        "symfony/cache": "^5.4|^6.0|^7.0",
         "vimeo/psalm": ">=2"
     },
     "autoload": {
