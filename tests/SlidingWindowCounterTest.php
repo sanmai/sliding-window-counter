@@ -27,7 +27,7 @@ use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use ReflectionMethod;
 use Tests\SlidingWindowCounter\Cache\FakeCache;
-use Tumblr\Chorus\FakeTimeKeeper;
+use DuoClock\TimeSpy;
 
 use function array_keys;
 use function iterator_to_array;
@@ -51,7 +51,7 @@ final class SlidingWindowCounterTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Cache name expected to be a non-blank string');
 
-        new SlidingWindowCounter('', 0, 0, new FakeCache(), new FakeTimeKeeper());
+        new SlidingWindowCounter('', 0, 0, new FakeCache(), new TimeSpy());
     }
 
     /**
@@ -62,7 +62,7 @@ final class SlidingWindowCounterTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Window size expected to be a strictly positive integer, received: 0');
 
-        new SlidingWindowCounter('test', 0, 0, new FakeCache(), new FakeTimeKeeper());
+        new SlidingWindowCounter('test', 0, 0, new FakeCache(), new TimeSpy());
     }
 
     /**
@@ -73,7 +73,7 @@ final class SlidingWindowCounterTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Observation period expected to be a strictly positive integer, received: 0');
 
-        new SlidingWindowCounter('test', 1, 0, new FakeCache(), new FakeTimeKeeper());
+        new SlidingWindowCounter('test', 1, 0, new FakeCache(), new TimeSpy());
     }
 
     /**
@@ -82,7 +82,7 @@ final class SlidingWindowCounterTest extends TestCase
     public function testIncrement(): void
     {
         // Prime number so we can test the modulo
-        $time_keeper = new FakeTimeKeeper(27644437);
+        $time_keeper = new TimeSpy(27644437);
 
         $window_size = 60;
         $observation_period = 1000;
@@ -108,7 +108,7 @@ final class SlidingWindowCounterTest extends TestCase
      */
     public function testIncrementThrowsTimeInPast(): void
     {
-        $time_keeper = new FakeTimeKeeper(27644437);
+        $time_keeper = new TimeSpy(27644437);
 
         $window_size = 60;
         $observation_period = 1000;
@@ -118,7 +118,7 @@ final class SlidingWindowCounterTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessageMatches('/The time provided \(\d+\) is too far in the past \(current time: \d+, observation period: 1000\)/');
 
-        $counter->increment('test', 123, $time_keeper->getCurrentUnixTime() - $observation_period - 1);
+        $counter->increment('test', 123, $time_keeper->time() - $observation_period - 1);
     }
 
     /**
@@ -126,7 +126,7 @@ final class SlidingWindowCounterTest extends TestCase
      */
     public function testCacheGet(): void
     {
-        $time_keeper = new FakeTimeKeeper(27644437);
+        $time_keeper = new TimeSpy(27644437);
 
         $window_size = 60;
         $observation_period = 60;
@@ -144,7 +144,7 @@ final class SlidingWindowCounterTest extends TestCase
 
         $counter = new SlidingWindowCounter($cache_name, $window_size, $observation_period, $cache, $time_keeper);
 
-        foreach (self::getMaterialValues($counter, 'test', $time_keeper->getCurrentUnixTime()) as $value) {
+        foreach (self::getMaterialValues($counter, 'test', $time_keeper->time()) as $value) {
             $this->assertSame(42.0, $value);
         }
     }
@@ -155,7 +155,7 @@ final class SlidingWindowCounterTest extends TestCase
     public function testIncrementWithTwoBuckets(): void
     {
         $now = 193;
-        $time_keeper = new FakeTimeKeeper($now);
+        $time_keeper = new TimeSpy($now);
 
         $window_size = 60;
 
@@ -163,24 +163,24 @@ final class SlidingWindowCounterTest extends TestCase
 
         $counter->increment('test', 2);
 
-        $time_keeper->setCurrentUnixTime($now++);
+        $time_keeper->setTime($now++);
         $counter->increment('test', 3);
 
-        $time_keeper->setCurrentUnixTime($now++);
+        $time_keeper->setTime($now++);
         $counter->increment('test', 3);
 
-        $time_keeper->setCurrentUnixTime($now++);
+        $time_keeper->setTime($now++);
         $counter->increment('test', 16);
 
-        $time_keeper->setCurrentUnixTime($now++);
+        $time_keeper->setTime($now++);
         $counter->increment('test', 18);
 
-        $time_keeper->setCurrentUnixTime($now += $window_size - 2);
+        $time_keeper->setTime($now += $window_size - 2);
 
         $counter->increment('test', 8);
         $counter->increment('test', 10);
 
-        $this->assertSame(255, $time_keeper->getCurrentUnixTime());
+        $this->assertSame(255, $time_keeper->time());
 
         $this->assertSame([
             180 => 42.0,
@@ -199,7 +199,7 @@ final class SlidingWindowCounterTest extends TestCase
         $now = 939193;
         $window_size = 60;
 
-        $counter = new SlidingWindowCounter('default', $window_size, 172800, new FakeCache(), new FakeTimeKeeper($now));
+        $counter = new SlidingWindowCounter('default', $window_size, 172800, new FakeCache(), new TimeSpy($now));
 
         /** @var SlidingWindowCounter $counter */
         $counter->increment('test', 40);
@@ -280,7 +280,7 @@ final class SlidingWindowCounterTest extends TestCase
         $now = 1686908940;
         $bucket_key = 'foo';
 
-        $counter = new SlidingWindowCounter('default', 60, 3600, new FakeCache(), new FakeTimeKeeper($now));
+        $counter = new SlidingWindowCounter('default', 60, 3600, new FakeCache(), new TimeSpy($now));
 
         foreach (range($now - 600, $now - 60, 60) as $timestamp) {
             $counter->increment($bucket_key, 60, $timestamp);
@@ -299,7 +299,7 @@ final class SlidingWindowCounterTest extends TestCase
         $now = 1686908940;
         $bucket_key = 'bar';
 
-        $counter = new SlidingWindowCounter('default', 60, 3600, new FakeCache(), new FakeTimeKeeper($now));
+        $counter = new SlidingWindowCounter('default', 60, 3600, new FakeCache(), new TimeSpy($now));
 
         foreach (range($now - 60 * 5, $now - 60, 60) as $timestamp) {
             $counter->increment($bucket_key, 60, $timestamp);
@@ -333,7 +333,7 @@ final class SlidingWindowCounterTest extends TestCase
     {
         $bucket_key = "fuzz{$now}";
 
-        $counter = new SlidingWindowCounter('default', 5, 600, new FakeCache(), new FakeTimeKeeper($now));
+        $counter = new SlidingWindowCounter('default', 5, 600, new FakeCache(), new TimeSpy($now));
 
         foreach (range($now - 300, $now, 5) as $timestamp) {
             $counter->increment($bucket_key, 5, $timestamp);

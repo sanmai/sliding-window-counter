@@ -23,7 +23,8 @@ namespace SlidingWindowCounter;
 use InvalidArgumentException;
 use Pipeline\Helper\RunningVariance;
 use Pipeline\Standard;
-use Tumblr\Chorus;
+use DuoClock\DuoClock;
+use DuoClock\Interfaces\DuoClockInterface;
 
 use function is_int;
 use function Pipeline\take;
@@ -46,8 +47,8 @@ final class SlidingWindowCounter
     /** @var Cache\CounterCache The counter cache instance */
     private Cache\CounterCache $counter_cache;
 
-    /** @var Chorus\TimeKeeper The timekeeper instance. */
-    private Chorus\TimeKeeper $time_keeper;
+    /** @var DuoClockInterface The clock instance. */
+    private DuoClockInterface $clock;
 
     /** @var Helper\FrameBuilder The frame builder. */
     private Helper\FrameBuilder $frame_builder;
@@ -58,7 +59,7 @@ final class SlidingWindowCounter
      * @param string $cache_name the cache name to use for buckets
      * @param int $window_size the size of the sampling window in seconds
      * @param int $observation_period the maximum number of seconds for counters to persist in the cache
-     * @param null|Chorus\TimeKeeper $time_keeper the timekeeper instance
+     * @param null|DuoClockInterface $clock the clock instance
      * @param null|Helper\FrameBuilder $frame_builder the timestamp helper
      *
      * @throws InvalidArgumentException if a blank string is provided for the cache name
@@ -69,7 +70,7 @@ final class SlidingWindowCounter
         int $window_size,
         int $observation_period,
         Cache\CounterCache $counter_cache,
-        ?Chorus\TimeKeeper $time_keeper = null,
+        ?DuoClockInterface $clock = null,
         ?Helper\FrameBuilder $frame_builder = null
     ) {
         if ('' === $cache_name) {
@@ -92,9 +93,9 @@ final class SlidingWindowCounter
         $this->counter_cache = $counter_cache;
 
         // Optional dependencies
-        $this->time_keeper = $time_keeper ?? new Chorus\TimeKeeper();
+        $this->clock = $clock ?? new DuoClock();
 
-        $this->frame_builder = $frame_builder ?? new Helper\FrameBuilder($window_size, $observation_period, $this->time_keeper);
+        $this->frame_builder = $frame_builder ?? new Helper\FrameBuilder($window_size, $observation_period, $this->clock);
     }
 
     /**
@@ -110,18 +111,18 @@ final class SlidingWindowCounter
      */
     public function increment(string $bucket_key, int $step = 1, ?int $at_time = null)
     {
-        if (null !== $at_time && $at_time < $this->time_keeper->getCurrentUnixTime() - $this->observation_period) {
+        if (null !== $at_time && $at_time < $this->clock->time() - $this->observation_period) {
             throw new InvalidArgumentException(
                 sprintf(
                     'The time provided (%d) is too far in the past (current time: %d, observation period: %d)',
                     $at_time,
-                    $this->time_keeper->getCurrentUnixTime(),
+                    $this->clock->time(),
                     $this->observation_period
                 )
             );
         }
 
-        $at_time ??= $this->time_keeper->getCurrentUnixTime();
+        $at_time ??= $this->clock->time();
 
         $cache_key = $this->frame_builder
             ->newFrame($at_time)
@@ -182,7 +183,7 @@ final class SlidingWindowCounter
     {
         // Capture the current time to decide when to stop extrapolating
         // We can't use the provided end time for this purpose because it could be in the past necessitating extrapolation
-        $now = $this->time_keeper->getCurrentUnixTime();
+        $now = $this->clock->time();
 
         /** @var null|Helper\Frame $previous_frame */
         $previous_frame = null;
@@ -233,7 +234,7 @@ final class SlidingWindowCounter
     {
         return take($this->getTimeSeries(
             $bucket_key,
-            $this->time_keeper->getCurrentUnixTime() - $this->window_size
+            $this->clock->time() - $this->window_size
         ))->fold(0.0);
     }
 
