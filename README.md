@@ -1,7 +1,7 @@
 # Sliding Window Counter 📊⏱️
 
 [![Latest Stable Version](https://img.shields.io/packagist/v/sanmai/sliding-window-counter.svg)](https://packagist.org/packages/sanmai/sliding-window-counter)
-[![License](https://img.shields.io/badge/license-GPL--2.0-blue.svg)](https://github.com/sanmai/sliding-window-counter/blob/master/LICENSE)
+[![License](https://img.shields.io/badge/license-GPL--2.0%20OR%20Apache--2.0-blue.svg)](https://github.com/sanmai/sliding-window-counter#license)
 
 ## Short-lived cache-backed time series with anomaly detection
 
@@ -243,4 +243,9 @@ Please ensure your code follows the existing style and includes appropriate test
 
 ## License
 
-This library is licensed under the GNU General Public License v2.0. See the [LICENSE](LICENSE) file for details.
+This library is dual-licensed under the GNU General Public License v2.0 or later and the Apache License 2.0. You may choose either license to govern your use of this software.
+
+- For GPL-2.0-or-later license terms, see the [LICENSE-GPL](LICENSE-GPL) file
+- For Apache-2.0 license terms, see the [LICENSE](LICENSE) file
+
+When using this library, you must comply with the terms of at least one of these licenses.
