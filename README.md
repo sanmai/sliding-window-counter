@@ -163,10 +163,6 @@ The library supports multiple caching backends through a simple adapter interfac
 // For regular Memcached
 use SlidingWindowCounter\Cache\MemcachedAdapter;
 $adapter = new MemcachedAdapter($memcached);
-
-// For WordPress sites (uses WP's object cache)
-use SlidingWindowCounter\Cache\WPCacheAdapter;
-$adapter = new WPCacheAdapter($wp_object_cache);
 ```
 
 ### Creating Your Own Adapter
