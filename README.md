@@ -1,4 +1,4 @@
-# Sliding Window Counter 📊⏱️
+# Sliding Window Counter
 
 [![Latest Stable Version](https://img.shields.io/packagist/v/sanmai/sliding-window-counter.svg)](https://packagist.org/packages/sanmai/sliding-window-counter)
 [![License](https://img.shields.io/badge/license-GPL--2.0%20OR%20Apache--2.0-blue.svg)](https://github.com/sanmai/sliding-window-counter#license)
@@ -34,22 +34,22 @@ composer require sanmai/sliding-window-counter
 
 Ever needed to track how many times something happens over time and spot when those numbers get weird? That's what this library does, and it does it efficiently.
 
-**Real-world example:** Imagine you want to detect when suspicious messages from specific IP ranges suddenly spike. Instead of digging through logs or querying databases (slow and resource-hungry), this library uses in-memory caching to track events and spot unusual patterns.
+Real-world example: Imagine you want to detect when suspicious messages from specific IP ranges suddenly spike. Instead of digging through logs or querying databases, this library uses in-memory caching to track events and spot unusual patterns before it is too late.
 
 ## Features
 
-✅ **Lightweight** - Uses your existing cache infrastructure<br>
-✅ **Fast** - No database queries or log parsing<br>
-✅ **Statistical anomaly detection** - Based on standard deviations<br>
-✅ **Flexible time windows** - Configure to your needs<br>
-✅ **Production-ready** - Originally [developed at Automattic for Tumblr](https://github.com/Automattic/sliding-window-counter)
+- Lightweight - Uses your existing cache infrastructure
+- Fast - No database queries or log parsing
+- Robust anomaly detection - Based on standard deviations
+- Flexible time windows - Configure to your needs
+- Production-ready - Originally developed for Tumblr
 
 ## How it works (the simple version)
 
-1. **Divide time into buckets** - We slice time into equal chunks (like 5-minute windows or hourly buckets)
-2. **Count events in cache** - Each event increments a counter in the appropriate time bucket
-3. **Create time series on demand** - When needed, we assemble these buckets into a continuous series
-4. **Apply statistical analysis** - We calculate mean, standard deviation, and detect outliers
+1. Divide time into buckets - We slice time into equal chunks (like 5-minute windows or hourly buckets)
+2. Count events in cache - Each event increments a counter in the appropriate time bucket
+3. Create time series on demand - When needed, we assemble these buckets into a continuous series
+4. Apply statistical analysis - We calculate mean, standard deviation, and detect outliers
 
 The library handles all the tricky parts like:
 - What happens when current time doesn't perfectly align with your time buckets
@@ -146,21 +146,11 @@ A quick stats refresher:
 - 3 standard deviations: ~99.7% of normal values in this range (high confidence)
 - 5 standard deviations: ~99.99994% of normal values in this range (1 in ~1.7 million chance)
 
-### Choosing the Right Sensitivity
-
-| Sensitivity | Best For | False Positive Rate |
-|-------------|----------|---------------------|
-| 1 | Early warning systems, where cost of missing an event is high | ~32% |
-| 2 | General purpose anomaly detection | ~5% |
-| 3 | Critical systems where false alarms are costly | ~0.3% |
-| 5 | Mission-critical infrastructure, fraud detection | ~0.00006% |
-
 ## Available Cache Adapters
 
-The library supports multiple caching backends through a simple adapter interface:
+The library supports multiple caching backends through a simple adapter interface. An example using regular Memcached:
 
 ```php
-// For regular Memcached
 use SlidingWindowCounter\Cache\MemcachedAdapter;
 $adapter = new MemcachedAdapter($memcached);
 ```
@@ -201,45 +191,22 @@ class RedisAdapter implements CounterCache
 
 The library uses an elegant sliding window approach to time series data. Here's how it works under the hood:
 
-### Key Concepts
-
-- **Material frames**: The actual cached data buckets aligned to window boundaries
-- **Logical frames**: Windows aligned to the current time (which may overlap multiple material frames)
+- Material frames: The actual cached data buckets aligned to window boundaries
+- Logical frames: Windows aligned to the current time (which may overlap multiple material frames)
 
 When calculating values for logical frames that don't perfectly align with material frames, we perform weighted extrapolation to ensure smooth transitions in the time series.
 
-### Visual Explanation
-
 Consider these two scenarios:
 
-1. **Perfectly aligned frames**: When the query time aligns with cache bucket boundaries, we can use the raw values directly.
+1. Perfectly aligned frames: When the query time aligns with cache bucket boundaries, we can use the raw values directly.
 
 ![Aligned Frames](docs/images/logical-frames-aligned.png)
 
-2. **Misaligned frames**: When the query time doesn't align with cache boundaries, we extrapolate values based on overlapping portions.
+2. Misaligned frames: When the query time doesn't align with cache boundaries, we extrapolate values based on overlapping portions.
 
 ![Misaligned Frames](docs/images/logical-frames-disaligned.png)
 
 For a more detailed explanation of the internal workings, check out [this Cloudflare blog post](https://blog.cloudflare.com/counting-things-a-lot-of-different-things/) which explains a similar approach.
-
-## Performance Considerations
-
-- **Memory usage**: Extremely efficient as it only stores count values, not individual events
-- **CPU usage**: Statistical calculations are performed using numerically stable online algorithms
-- **Network overhead**: Minimal - only requires simple increment/get operations on your cache
-- **Scalability**: Scales horizontally with your existing cache infrastructure
-
-## Contributing
-
-Contributions are welcome! Here are some ways you can contribute:
-
-- Report bugs by creating an issue
-- Suggest new features or improvements
-- Submit pull requests with bug fixes or new features
-- Improve documentation
-- Write tests
-
-Please ensure your code follows the existing style and includes appropriate tests.
 
 ## License
 
@@ -249,3 +216,5 @@ This library is dual-licensed under the GNU General Public License v2.0 or later
 - For Apache-2.0 license terms, see the [LICENSE](LICENSE) file
 
 When using this library, you must comply with the terms of at least one of these licenses.
+
+All contributions to this project have been reviewed and confirmed by the respective authors as dual-licensed. If you believe your code was included without proper attribution or license representation, please contact us and we'll address it immediately.
