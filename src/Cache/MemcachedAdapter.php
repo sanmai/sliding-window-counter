@@ -29,8 +29,9 @@ use function is_int;
 
 /**
  * A Memcached adapter for the sliding window counter.
+ * @final
  */
-final class MemcachedAdapter implements CounterCache
+class MemcachedAdapter implements CounterCache
 {
     private Memcached $cache;
 

@@ -27,8 +27,9 @@ use function intdiv;
 
 /**
  * The current frame of the sliding window counter.
+ * @final
  */
-final class Frame
+class Frame
 {
     /** @var int Frame's reference timestamp */
     private int $time;
