@@ -32,8 +32,9 @@ use function round;
 
 /**
  * The result of the anomaly detection.
+ * @final
  */
-final class AnomalyDetectionResult
+class AnomalyDetectionResult
 {
     /**
      * Anomaly detection not found. Not an anomaly.

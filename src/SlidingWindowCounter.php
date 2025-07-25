@@ -34,8 +34,9 @@ use function sprintf;
 
 /**
  * Sliding window counter and time series.
+ * @final
  */
-final class SlidingWindowCounter
+class SlidingWindowCounter
 {
     /** @var string Memcached cache name to use for buckets. */
     private string $cache_name;
