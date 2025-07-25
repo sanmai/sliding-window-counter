@@ -1,7 +1,10 @@
 {
     "name": "sanmai/sliding-window-counter",
     "description": "Short-lived cache-backed time series with anomaly detection",
-    "license": "GPL-2.0-or-later",
+    "license": [
+        "GPL-2.0-or-later",
+        "Apache-2.0"
+    ],
     "type": "library",
     "authors": [
         {
