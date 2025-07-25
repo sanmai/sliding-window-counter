@@ -24,7 +24,7 @@ use SlidingWindowCounter\Helper\Frame;
 use SlidingWindowCounter\Helper\FrameBuilder;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Tumblr\Chorus\FakeTimeKeeper;
+use DuoClock\TimeSpy;
 
 use function max;
 use function min;
@@ -174,7 +174,7 @@ final class FrameBuilderTest extends TestCase
         int $observation_period = 360,
         int $now = 997 // prime number
     ): void {
-        $builder = new FrameBuilder($window_size, $observation_period, new FakeTimeKeeper($now));
+        $builder = new FrameBuilder($window_size, $observation_period, new TimeSpy($now));
 
         $frame_starts = take($builder->generateFrames($start_time, $end_time))->cast(fn (Frame $frame) => $frame->getStart())->toArray();
 
@@ -198,7 +198,7 @@ final class FrameBuilderTest extends TestCase
     /** Test it throws an exception if the start time is in the future */
     public function testStartTimeInFuture(): void
     {
-        $builder = new FrameBuilder(60, 360, new FakeTimeKeeper(997));
+        $builder = new FrameBuilder(60, 360, new TimeSpy(997));
 
         $this->expectException(InvalidArgumentException::class);
         foreach ($builder->generateFrames(1000) as $frame) {
@@ -209,7 +209,7 @@ final class FrameBuilderTest extends TestCase
     /** Test it throws an exception if the end time is before the start time */
     public function testEndTimeBeforeStartTime(): void
     {
-        $builder = new FrameBuilder(60, 360, new FakeTimeKeeper(997));
+        $builder = new FrameBuilder(60, 360, new TimeSpy(997));
         $this->expectException(InvalidArgumentException::class);
         foreach ($builder->generateFrames(100, 99) as $frame) {
             $this->fail("Should not have generated frame {$frame->getStart()}");

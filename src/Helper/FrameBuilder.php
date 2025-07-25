@@ -21,7 +21,8 @@
 namespace SlidingWindowCounter\Helper;
 
 use InvalidArgumentException;
-use Tumblr\Chorus;
+use DuoClock\DuoClock;
+use DuoClock\Interfaces\DuoClockInterface;
 
 use function max;
 
@@ -36,21 +37,21 @@ final class FrameBuilder
     /** @var int Maximum number of seconds for the buckets to last in cache. */
     private int $observation_period;
 
-    /** @var Chorus\TimeKeeper The timekeeper instance. */
-    private Chorus\TimeKeeper $time_keeper;
+    /** @var DuoClockInterface The clock instance. */
+    private DuoClockInterface $clock;
 
     /**
      * FrameBuilder constructor.
      *
      * @param int<1, max> $window_size the size of the window in seconds
      * @param int $observation_period maximum number of seconds for the buckets to last in cache
-     * @param Chorus\TimeKeeper $time_keeper the timekeeper instance
+     * @param DuoClockInterface $clock the clock instance
      */
-    public function __construct(int $window_size, int $observation_period, Chorus\TimeKeeper $time_keeper)
+    public function __construct(int $window_size, int $observation_period, DuoClockInterface $clock)
     {
         $this->window_size = $window_size;
         $this->observation_period = $observation_period;
-        $this->time_keeper = $time_keeper;
+        $this->clock = $clock;
     }
 
     /**
@@ -79,7 +80,7 @@ final class FrameBuilder
             throw new InvalidArgumentException("End time cannot be before start time (start: {$start_time}, end: {$end_time})");
         }
 
-        $end_time ??= $this->time_keeper->getCurrentUnixTime();
+        $end_time ??= $this->clock->time();
 
         // Start time cannot be in the future
         if ($start_time > $end_time) {
@@ -87,7 +88,7 @@ final class FrameBuilder
         }
 
         // We cannot be looking at records beyond the max lifetime
-        $started_tracking = $this->time_keeper->getCurrentUnixTime() - $this->observation_period;
+        $started_tracking = $this->clock->time() - $this->observation_period;
         $start_time = max($start_time, $started_tracking);
 
         $window_boundary = $start_time % $this->window_size;
