@@ -19,7 +19,6 @@
         "ergebnis/composer-normalize": "^2.8",
         "friendsofphp/php-cs-fixer": "^3.17",
         "infection/infection": ">=0.10.5",
-        "johnpbloch/wordpress-core": "^6.2",
         "phan/phan": ">=1.1",
         "phpstan/phpstan": ">=0.10",
         "phpunit/phpunit": ">=9.4 <12",
@@ -33,10 +32,7 @@
     "autoload-dev": {
         "psr-4": {
             "Tests\\SlidingWindowCounter\\": "tests/"
-        },
-        "classmap": [
-            "vendor/johnpbloch/wordpress-core/wp-includes/"
-        ]
+        }
     },
     "config": {
         "allow-plugins": true,
