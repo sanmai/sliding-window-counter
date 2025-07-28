@@ -134,10 +134,12 @@ $result = $counter->detectAnomaly($_SERVER['REMOTE_ADDR'], 5);
 ```
 
 A quick stats refresher:
-- 1 standard deviation: ~68% of normal values in this range (fairly sensitive)
-- 2 standard deviations: ~95% of normal values in this range (recommended default)
-- 3 standard deviations: ~99.7% of normal values in this range (high confidence)
+- 1 standard deviation: ~68% of normal values in this range (very sensitive)
+- 2 standard deviations: ~95% of normal values in this range (still very sensitive)
+- 3 standard deviations: ~99.7% of normal values in this range (fairly sensitive)
 - 5 standard deviations: ~99.99994% of normal values in this range (1 in ~1.7 million chance)
+
+Five standard deviations from the mean is a definite anomaly: there's only a ~0.000057% chance that a data point this extreme occurs by random chance under the null hypothesis.
 
 ## Available Cache Adapters
 
