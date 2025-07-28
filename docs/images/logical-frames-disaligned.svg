@@ -1,59 +1,58 @@
 <svg width="650" height="320" xmlns="http://www.w3.org/2000/svg">
   <!-- Background -->
-  <rect width="650" height="320" fill="#f8f9fa"/>
+  <rect width="650" height="320" fill="#FFFFFF"/>
+  
+  <!-- Patterns -->
+  <defs>
+    <pattern id="logical" patternUnits="userSpaceOnUse" width="8" height="8">
+      <rect width="8" height="8" fill="#CCDDAA"/>
+      <line x1="0" y1="4" x2="8" y2="4" stroke="#AABB88" stroke-width="1"/>
+    </pattern>
+    <pattern id="material" patternUnits="userSpaceOnUse" width="8" height="8">
+      <rect width="8" height="8" fill="#99DDFF"/>
+      <line x1="0" y1="0" x2="8" y2="8" stroke="#77BBDD" stroke-width="1"/>
+    </pattern>
+  </defs>
   
   <!-- Logical frames -->
-  <text x="300" y="40" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold">Logical frames</text>
+  <text x="300" y="35" text-anchor="middle" font-family="'Inter', 'Segoe UI', system-ui, sans-serif" font-size="17" font-weight="600" fill="#333333">Logical frames</text>
   
   <!-- Logical frame 0 (partially cut off) -->
-  <rect x="-20" y="60" width="150" height="50" fill="#fef9f3" stroke="#0ea5e9" stroke-width="2"/>
-  <pattern id="dots0" patternUnits="userSpaceOnUse" width="4" height="4">
-    <circle cx="2" cy="2" r="0.5" fill="#f59e0b" opacity="0.2"/>
-  </pattern>
-  <rect x="-20" y="60" width="150" height="50" fill="url(#dots0)"/>
+  <rect x="-20" y="60" width="150" height="50" fill="url(#logical)" stroke="#666666" stroke-width="2"/>
   
-  <!-- Logical frame 1 (lightest) -->
-  <rect x="80" y="60" width="150" height="50" fill="#fef7e0" stroke="#0ea5e9" stroke-width="2"/>
-  <pattern id="dots1" patternUnits="userSpaceOnUse" width="4" height="4">
-    <circle cx="2" cy="2" r="0.5" fill="#f59e0b" opacity="0.4"/>
-  </pattern>
-  <rect x="80" y="60" width="150" height="50" fill="url(#dots1)"/>
+  <!-- Logical frame 1 -->
+  <rect x="80" y="60" width="150" height="50" fill="url(#logical)" stroke="#666666" stroke-width="2"/>
   
-  <!-- Logical frame 2 (medium) -->
-  <rect x="230" y="60" width="150" height="50" fill="#fcd34d" stroke="#0ea5e9" stroke-width="2"/>
-  <pattern id="dots2" patternUnits="userSpaceOnUse" width="4" height="4">
-    <circle cx="2" cy="2" r="0.5" fill="#f59e0b" opacity="0.7"/>
-  </pattern>
-  <rect x="230" y="60" width="150" height="50" fill="url(#dots2)"/>
+  <!-- Logical frame 2 -->
+  <rect x="230" y="60" width="150" height="50" fill="url(#logical)" stroke="#666666" stroke-width="2"/>
   
-  <!-- Logical frame 3 (darkest) -->
-  <rect x="380" y="60" width="150" height="50" fill="#f59e0b" stroke="#0ea5e9" stroke-width="2"/>
-  <pattern id="dots3" patternUnits="userSpaceOnUse" width="4" height="4">
-    <circle cx="2" cy="2" r="0.5" fill="#d97706" opacity="0.9"/>
-  </pattern>
-  <rect x="380" y="60" width="150" height="50" fill="url(#dots3)"/>
+  <!-- Logical frame 3 -->
+  <rect x="380" y="60" width="150" height="50" fill="url(#logical)" stroke="#666666" stroke-width="2"/>
   
-  <!-- Material frames label -->
-  <text x="300" y="180" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold">Material frames</text>
+  <!-- Material frames -->
+  <text x="300" y="175" text-anchor="middle" font-family="'Inter', 'Segoe UI', system-ui, sans-serif" font-size="17" font-weight="600" fill="#333333">Material frames</text>
   
   <!-- Material frame 0 (partially cut off) -->
-  <rect x="-20" y="200" width="150" height="50" fill="#f0f9ff" stroke="#0ea5e9" stroke-width="2"/>
+  <rect x="-20" y="200" width="150" height="50" fill="url(#material)" stroke="#666666" stroke-width="2"/>
   
   <!-- Material frame 1 (shifted right by 50px) -->
-  <rect x="130" y="200" width="150" height="50" fill="#e0f2fe" stroke="#0ea5e9" stroke-width="2"/>
+  <rect x="130" y="200" width="150" height="50" fill="url(#material)" stroke="#666666" stroke-width="2"/>
   
   <!-- Material frame 2 (adjacent, no gaps) -->
-  <rect x="280" y="200" width="150" height="50" fill="#0ea5e9" stroke="#0ea5e9" stroke-width="2"/>
+  <rect x="280" y="200" width="150" height="50" fill="url(#material)" stroke="#666666" stroke-width="2"/>
   
-  <!-- Material frame 3 (extends past "Now" line) -->
-  <rect x="430" y="200" width="150" height="50" fill="#0284c7" stroke="#0ea5e9" stroke-width="2"/>
+  <!-- Material frame 3 (past and future parts) -->
+  <!-- Past part (with texture) -->
+  <rect x="430" y="200" width="100" height="50" fill="url(#material)" stroke="#666666" stroke-width="2"/>
+  <!-- Future part (solid, lighter) -->
+  <rect x="530" y="200" width="50" height="50" fill="#E6F4FF" stroke="#666666" stroke-width="2"/>
   
   <!-- Dashed vertical lines aligning with logical frame boundaries -->
-  <line x1="80" y1="60" x2="80" y2="280" stroke="#666" stroke-width="1" stroke-dasharray="5,5"/>
-  <line x1="230" y1="60" x2="230" y2="280" stroke="#666" stroke-width="1" stroke-dasharray="5,5"/>
-  <line x1="380" y1="60" x2="380" y2="280" stroke="#666" stroke-width="1" stroke-dasharray="5,5"/>
+  <line x1="80" y1="60" x2="80" y2="280" stroke="#888888" stroke-width="1" stroke-dasharray="5,5"/>
+  <line x1="230" y1="60" x2="230" y2="280" stroke="#888888" stroke-width="1" stroke-dasharray="5,5"/>
+  <line x1="380" y1="60" x2="380" y2="280" stroke="#888888" stroke-width="1" stroke-dasharray="5,5"/>
   
   <!-- Now line -->
-  <line x1="530" y1="40" x2="530" y2="280" stroke="#dc2626" stroke-width="3"/>
-  <text x="540" y="55" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Now</text>
+  <line x1="530" y1="35" x2="530" y2="300" stroke="#EE6677" stroke-width="3"/>
+  <text x="540" y="50" font-family="'Inter', 'Segoe UI', system-ui, sans-serif" font-size="15" font-weight="600" fill="#333333">Now</text>
 </svg>
