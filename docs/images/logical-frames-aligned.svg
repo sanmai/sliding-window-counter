@@ -1,0 +1,54 @@
+<svg width="650" height="280" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="650" height="280" fill="#f8f9fa"/>
+  
+  <!-- Logical frames -->
+  <text x="300" y="40" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold">Logical frames</text>
+  
+  <!-- Logical frame 0 (partially cut off) -->
+  <rect x="-20" y="60" width="150" height="50" fill="#fef9f3" stroke="#fbbf24" stroke-width="2"/>
+  <pattern id="dots0" patternUnits="userSpaceOnUse" width="4" height="4">
+    <circle cx="2" cy="2" r="0.5" fill="#fbbf24" opacity="0.2"/>
+  </pattern>
+  <rect x="-20" y="60" width="150" height="50" fill="url(#dots0)"/>
+  
+  <!-- Logical frame 1 (lightest) -->
+  <rect x="80" y="60" width="150" height="50" fill="#fef7e0" stroke="#fbbf24" stroke-width="2"/>
+  <pattern id="dots1" patternUnits="userSpaceOnUse" width="4" height="4">
+    <circle cx="2" cy="2" r="0.5" fill="#fbbf24" opacity="0.3"/>
+  </pattern>
+  <rect x="80" y="60" width="150" height="50" fill="url(#dots1)"/>
+  
+  <!-- Logical frame 2 (medium) -->
+  <rect x="230" y="60" width="150" height="50" fill="#fcd34d" stroke="#fbbf24" stroke-width="2"/>
+  <pattern id="dots2" patternUnits="userSpaceOnUse" width="4" height="4">
+    <circle cx="2" cy="2" r="0.5" fill="#f59e0b" opacity="0.6"/>
+  </pattern>
+  <rect x="230" y="60" width="150" height="50" fill="url(#dots2)"/>
+  
+  <!-- Logical frame 3 (darkest) -->
+  <rect x="380" y="60" width="150" height="50" fill="#f59e0b" stroke="#fbbf24" stroke-width="2"/>
+  <pattern id="dots3" patternUnits="userSpaceOnUse" width="4" height="4">
+    <circle cx="2" cy="2" r="0.5" fill="#d97706" opacity="0.8"/>
+  </pattern>
+  <rect x="380" y="60" width="150" height="50" fill="url(#dots3)"/>
+  
+  <!-- Material frames -->
+  <text x="300" y="170" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold">Material frames</text>
+  
+  <!-- Material frame 0 (partially cut off) -->
+  <rect x="-20" y="190" width="150" height="50" fill="#f0f9ff" stroke="#0284c7" stroke-width="2"/>
+  
+  <!-- Material frame 1 -->
+  <rect x="80" y="190" width="150" height="50" fill="#e0f2fe" stroke="#0284c7" stroke-width="2"/>
+  
+  <!-- Material frame 2 -->
+  <rect x="230" y="190" width="150" height="50" fill="#0ea5e9" stroke="#0284c7" stroke-width="2"/>
+  
+  <!-- Material frame 3 -->
+  <rect x="380" y="190" width="150" height="50" fill="#0284c7" stroke="#0284c7" stroke-width="2"/>
+  
+  <!-- Now line -->
+  <line x1="530" y1="40" x2="530" y2="260" stroke="#dc2626" stroke-width="3"/>
+  <text x="540" y="55" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Now</text>
+</svg>
