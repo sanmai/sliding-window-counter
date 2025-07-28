@@ -1,0 +1,50 @@
+<svg width="650" height="320" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="650" height="320" fill="#FFFFFF"/>
+  
+  <!-- Patterns -->
+  <defs>
+    <pattern id="logical" patternUnits="userSpaceOnUse" width="8" height="8">
+      <rect width="8" height="8" fill="#CCDDAA"/>
+      <line x1="0" y1="4" x2="8" y2="4" stroke="#AABB88" stroke-width="1"/>
+    </pattern>
+    <pattern id="material" patternUnits="userSpaceOnUse" width="8" height="8">
+      <rect width="8" height="8" fill="#99DDFF"/>
+      <line x1="0" y1="0" x2="8" y2="8" stroke="#77BBDD" stroke-width="1"/>
+    </pattern>
+  </defs>
+  
+  <!-- Logical frames -->
+  <text x="305" y="35" text-anchor="middle" font-family="'Inter', 'Segoe UI', system-ui, sans-serif" font-size="14" font-weight="600" fill="#333333">Logical frames</text>
+  
+  <!-- Logical frame 0 (partially cut off) -->
+  <rect x="-20" y="60" width="150" height="50" fill="url(#logical)" stroke="#666666" stroke-width="2"/>
+  
+  <!-- Logical frame 1 -->
+  <rect x="80" y="60" width="150" height="50" fill="url(#logical)" stroke="#666666" stroke-width="2"/>
+  
+  <!-- Logical frame 2 -->
+  <rect x="230" y="60" width="150" height="50" fill="url(#logical)" stroke="#666666" stroke-width="2"/>
+  
+  <!-- Logical frame 3 -->
+  <rect x="380" y="60" width="150" height="50" fill="url(#logical)" stroke="#666666" stroke-width="2"/>
+  
+  <!-- Material frames -->
+  <text x="305" y="175" text-anchor="middle" font-family="'Inter', 'Segoe UI', system-ui, sans-serif" font-size="14" font-weight="600" fill="#333333">Material frames</text>
+  
+  <!-- Material frame 0 (partially cut off) -->
+  <rect x="-20" y="200" width="150" height="50" fill="url(#material)" stroke="#666666" stroke-width="2"/>
+  
+  <!-- Material frame 1 -->
+  <rect x="80" y="200" width="150" height="50" fill="url(#material)" stroke="#666666" stroke-width="2"/>
+  
+  <!-- Material frame 2 -->
+  <rect x="230" y="200" width="150" height="50" fill="url(#material)" stroke="#666666" stroke-width="2"/>
+  
+  <!-- Material frame 3 -->
+  <rect x="380" y="200" width="150" height="50" fill="url(#material)" stroke="#666666" stroke-width="2"/>
+  
+  <!-- Now line -->
+  <line x1="530" y1="35" x2="530" y2="300" stroke="#EE6677" stroke-width="3"/>
+  <text x="540" y="50" font-family="'Inter', 'Segoe UI', system-ui, sans-serif" font-size="14" font-weight="600" fill="#333333">Now</text>
+</svg>
