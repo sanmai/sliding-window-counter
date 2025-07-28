@@ -15,7 +15,7 @@
   </defs>
   
   <!-- Logical frames -->
-  <text x="300" y="35" text-anchor="middle" font-family="'Inter', 'Segoe UI', system-ui, sans-serif" font-size="17" font-weight="600" fill="#333333">Logical frames</text>
+  <text x="300" y="35" text-anchor="middle" font-family="'Inter', 'Segoe UI', system-ui, sans-serif" font-size="14" font-weight="600" fill="#333333">Logical frames</text>
   
   <!-- Logical frame 0 (partially cut off) -->
   <rect x="-20" y="60" width="150" height="50" fill="url(#logical)" stroke="#666666" stroke-width="2"/>
@@ -46,5 +46,5 @@
   
   <!-- Now line -->
   <line x1="530" y1="35" x2="530" y2="300" stroke="#EE6677" stroke-width="3"/>
-  <text x="540" y="50" font-family="'Inter', 'Segoe UI', system-ui, sans-serif" font-size="15" font-weight="600" fill="#333333">Now</text>
+  <text x="540" y="50" font-family="'Inter', 'Segoe UI', system-ui, sans-serif" font-size="14" font-weight="600" fill="#333333">Now</text>
 </svg>
