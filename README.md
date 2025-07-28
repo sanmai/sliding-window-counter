@@ -61,16 +61,12 @@ The library handles all the tricky parts like:
 ### Setting up a counter
 
 ```php
-// Import necessary classes
-use SlidingWindowCounter\SlidingWindowCounter;
-use SlidingWindowCounter\Cache\MemcachedAdapter;
-
 // Create a counter that tracks hourly data for the past 24 hours
-$counter = new SlidingWindowCounter(
+$counter = new \SlidingWindowCounter\SlidingWindowCounter(
     'visitor-counter',     // Name for your counter
     3600,                  // Window size: 3600 seconds (1 hour)
     3600 * 24,             // Keep data for 24 hours
-    new MemcachedAdapter($memcached)
+    new \SlidingWindowCounter\Cache\MemcachedAdapter($memcached)
 );
 ```
 
@@ -88,9 +84,6 @@ $counter->increment('product_' . $product_id);
 ### Detecting unusual activity
 
 ```php
-// Import the result class to access constants
-use SlidingWindowCounter\AnomalyDetectionResult;
-
 // Check if current activity is abnormal
 $result = $counter->detectAnomaly($_SERVER['REMOTE_ADDR']);
 
@@ -151,8 +144,7 @@ A quick stats refresher:
 The library supports multiple caching backends through a simple adapter interface. An example using regular Memcached:
 
 ```php
-use SlidingWindowCounter\Cache\MemcachedAdapter;
-$adapter = new MemcachedAdapter($memcached);
+$adapter = new \SlidingWindowCounter\Cache\MemcachedAdapter($memcached);
 ```
 
 ### Creating Your Own Adapter
@@ -182,7 +174,7 @@ class RedisAdapter implements CounterCache
     public function get(string $cache_name, string $cache_key): ?int
     {
         $value = $this->redis->get("{$cache_name}:{$cache_key}");
-        return is_numeric($value) ? (int)$value : null;
+        return is_numeric($value) ? (int) $value : null;
     }
 }
 ```
