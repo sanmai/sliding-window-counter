@@ -15,7 +15,7 @@
   </defs>
   
   <!-- Logical frames -->
-  <text x="300" y="35" text-anchor="middle" font-family="'Inter', 'Segoe UI', system-ui, sans-serif" font-size="14" font-weight="600" fill="#333333">Logical frames</text>
+  <text x="320" y="35" text-anchor="middle" font-family="'Inter', 'Segoe UI', system-ui, sans-serif" font-size="14" font-weight="600" fill="#333333">Logical frames</text>
   
   <!-- Logical frame 0 (partially cut off) -->
   <rect x="-20" y="60" width="150" height="50" fill="url(#logical)" stroke="#666666" stroke-width="2"/>
@@ -30,7 +30,7 @@
   <rect x="380" y="60" width="150" height="50" fill="url(#logical)" stroke="#666666" stroke-width="2"/>
   
   <!-- Material frames -->
-  <text x="300" y="175" text-anchor="middle" font-family="'Inter', 'Segoe UI', system-ui, sans-serif" font-size="14" font-weight="600" fill="#333333">Material frames</text>
+  <text x="320" y="175" text-anchor="middle" font-family="'Inter', 'Segoe UI', system-ui, sans-serif" font-size="14" font-weight="600" fill="#333333">Material frames</text>
   
   <!-- Material frame 0 (partially cut off) -->
   <rect x="-20" y="200" width="150" height="50" fill="url(#material)" stroke="#666666" stroke-width="2"/>
