@@ -200,11 +200,11 @@ Consider these two scenarios:
 
 1. Perfectly aligned frames: When the query time aligns with cache bucket boundaries, we can use the raw values directly.
 
-![Aligned Frames](docs/images/logical-frames-aligned.png)
+![Aligned Frames](docs/images/logical-frames-aligned.svg)
 
 2. Misaligned frames: When the query time doesn't align with cache boundaries, we extrapolate values based on overlapping portions.
 
-![Misaligned Frames](docs/images/logical-frames-disaligned.png)
+![Misaligned Frames](docs/images/logical-frames-disaligned.svg)
 
 For a more detailed explanation of the internal workings, check out [this Cloudflare blog post](https://blog.cloudflare.com/counting-things-a-lot-of-different-things/) which explains a similar approach.
 

@@ -27,6 +27,9 @@
         "phpunit/phpunit": ">=9.4 <12",
         "vimeo/psalm": ">=2"
     },
+    "replace": {
+        "automattic/sliding-window-counter": "*"
+    },
     "autoload": {
         "psr-4": {
             "SlidingWindowCounter\\": "src/"
