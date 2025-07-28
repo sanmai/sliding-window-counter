@@ -1,6 +1,6 @@
-<svg width="650" height="280" xmlns="http://www.w3.org/2000/svg">
+<svg width="650" height="320" xmlns="http://www.w3.org/2000/svg">
   <!-- Background -->
-  <rect width="650" height="280" fill="#FFFFFF"/>
+  <rect width="650" height="320" fill="#FFFFFF"/>
   
   <!-- Patterns -->
   <defs>
@@ -30,21 +30,21 @@
   <rect x="380" y="60" width="150" height="50" fill="url(#logical)" stroke="#666666" stroke-width="2"/>
   
   <!-- Material frames -->
-  <text x="300" y="165" text-anchor="middle" font-family="'Inter', 'Segoe UI', system-ui, sans-serif" font-size="17" font-weight="600" fill="#333333">Material frames</text>
+  <text x="300" y="175" text-anchor="middle" font-family="'Inter', 'Segoe UI', system-ui, sans-serif" font-size="17" font-weight="600" fill="#333333">Material frames</text>
   
   <!-- Material frame 0 (partially cut off) -->
-  <rect x="-20" y="190" width="150" height="50" fill="url(#material)" stroke="#666666" stroke-width="2"/>
+  <rect x="-20" y="200" width="150" height="50" fill="url(#material)" stroke="#666666" stroke-width="2"/>
   
   <!-- Material frame 1 -->
-  <rect x="80" y="190" width="150" height="50" fill="url(#material)" stroke="#666666" stroke-width="2"/>
+  <rect x="80" y="200" width="150" height="50" fill="url(#material)" stroke="#666666" stroke-width="2"/>
   
   <!-- Material frame 2 -->
-  <rect x="230" y="190" width="150" height="50" fill="url(#material)" stroke="#666666" stroke-width="2"/>
+  <rect x="230" y="200" width="150" height="50" fill="url(#material)" stroke="#666666" stroke-width="2"/>
   
   <!-- Material frame 3 -->
-  <rect x="380" y="190" width="150" height="50" fill="url(#material)" stroke="#666666" stroke-width="2"/>
+  <rect x="380" y="200" width="150" height="50" fill="url(#material)" stroke="#666666" stroke-width="2"/>
   
   <!-- Now line -->
-  <line x1="530" y1="35" x2="530" y2="260" stroke="#EE6677" stroke-width="3"/>
+  <line x1="530" y1="35" x2="530" y2="300" stroke="#EE6677" stroke-width="3"/>
   <text x="540" y="50" font-family="'Inter', 'Segoe UI', system-ui, sans-serif" font-size="15" font-weight="600" fill="#333333">Now</text>
 </svg>
