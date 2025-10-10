@@ -198,8 +198,9 @@ class SlidingWindowCounter
             if (null === $previous_frame) {
                 $previous_frame = $frame;
 
-                // To avoid aliasing artifacts we don't approximate the value for the oldest frame
-                // There could be a way to solve this issue, but for now we skip all initial frames
+                // To avoid aliasing artifacts, we don't extrapolate the oldest frame
+                // getFrameOverlap() references a frame before this one that we don't have
+                // Even if we assumed that non-existent frame had the same value, it could be completely wrong
                 continue;
             }
 
@@ -230,8 +231,10 @@ class SlidingWindowCounter
             $previous_frame = $frame;
         }
 
-        // Fallback: if only one frame exists, return its value without extrapolation
-        if (!$has_yielded && null !== $previous_frame) {
+        // Fallback: if only one frame exists, return its raw value without extrapolation.
+        // This is safe because we're not making assumptions about distribution - just returning what we have
+        // Similar to how we handle the most recent frame above.
+        if (null !== $previous_frame && !$has_yielded) {
             yield $previous_frame->getTime() => $previous_frame->getValue();
         }
     }

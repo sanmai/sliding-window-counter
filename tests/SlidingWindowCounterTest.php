@@ -319,13 +319,11 @@ final class SlidingWindowCounterTest extends TestCase
     public function testWindowSizeEqualsObservationPeriod(): void
     {
         $window_size = 60;
-        $observation_period = 60;
-        // Use a time that does NOT align to window boundary
-        $now = $window_size * 100 + 30; // = 6030, 30 seconds into current frame
+        $now = $window_size * 100 + 30; // = 6030, 30 seconds into the current frame
         $bucket_key = 'equal-window';
 
         $time_keeper = new TimeSpy($now);
-        $counter = new SlidingWindowCounter('default', $window_size, $observation_period, new FakeCache(), $time_keeper);
+        $counter = new SlidingWindowCounter('default', $window_size, $window_size, new FakeCache(), $time_keeper);
 
         // Both increments fall into the same material frame (6000-6060)
         // Increment 10 seconds in the past
