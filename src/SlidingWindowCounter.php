@@ -191,6 +191,8 @@ class SlidingWindowCounter
         /** @var null|Helper\Frame $previous_frame */
         $previous_frame = null;
 
+        $has_yielded = false;
+
         foreach ($this->generateMaterialFrames($bucket_key, $start_time, $end_time) as $frame) {
             /** @var Helper\Frame $frame */
             if (null === $previous_frame) {
@@ -223,8 +225,14 @@ class SlidingWindowCounter
             }
 
             yield $frame->getTime() => $full_value;
+            $has_yielded = true;
 
             $previous_frame = $frame;
+        }
+
+        // Fallback: if only one frame exists, return its value without extrapolation
+        if (!$has_yielded && null !== $previous_frame) {
+            yield $previous_frame->getTime() => $previous_frame->getValue();
         }
     }
 

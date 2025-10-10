@@ -314,6 +314,24 @@ final class SlidingWindowCounterTest extends TestCase
     }
 
     /**
+     * Test `getLatestValue` when window_size equals observation_period.
+     */
+    public function testWindowSizeEqualsObservationPeriod(): void
+    {
+        $window_size = 60;
+        // Use a time that does NOT align to window boundary
+        $now = $window_size * 100 + 30; // = 6030, NOT divisible by 60
+        $bucket_key = 'equal-window';
+
+        $counter = new SlidingWindowCounter('default', $window_size, $window_size, new FakeCache(), new TimeSpy($now));
+
+        $counter->increment($bucket_key, 30);
+
+        $latestValue = $counter->getLatestValue($bucket_key);
+        $this->assertGreaterThan(0.0, $latestValue, "getLatestValue returned {$latestValue} but should be > 0 when window_size equals observation_period");
+    }
+
+    /**
      * Data provider for `testFuzzing`.
      */
     public static function provideFuzzySeconds(): iterable
