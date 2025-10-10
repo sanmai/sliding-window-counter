@@ -319,16 +319,32 @@ final class SlidingWindowCounterTest extends TestCase
     public function testWindowSizeEqualsObservationPeriod(): void
     {
         $window_size = 60;
+        $observation_period = 60;
         // Use a time that does NOT align to window boundary
-        $now = $window_size * 100 + 30; // = 6030, NOT divisible by 60
+        $now = $window_size * 100 + 30; // = 6030, 30 seconds into current frame
         $bucket_key = 'equal-window';
 
-        $counter = new SlidingWindowCounter('default', $window_size, $window_size, new FakeCache(), new TimeSpy($now));
+        $time_keeper = new TimeSpy($now);
+        $counter = new SlidingWindowCounter('default', $window_size, $observation_period, new FakeCache(), $time_keeper);
 
+        // Both increments fall into the same material frame (6000-6060)
+        // Increment 10 seconds in the past
+        $counter->increment($bucket_key, 20, $now - 10);
+
+        // Increment now
         $counter->increment($bucket_key, 30);
 
         $latestValue = $counter->getLatestValue($bucket_key);
-        $this->assertGreaterThan(0.0, $latestValue, "getLatestValue returned {$latestValue} but should be > 0 when window_size equals observation_period");
+
+        // With both increments in the same material frame, we should get close to the sum
+        // The result should be greater than the larger single increment
+        $this->assertGreaterThan(30.0, $latestValue, "getLatestValue should account for both increments");
+
+        // The result should not exceed the sum of both increments
+        $this->assertLessThanOrEqual(50.0, $latestValue, "getLatestValue should not exceed the sum");
+
+        // Most importantly, verify the value is non-zero (the bug being fixed)
+        $this->assertGreaterThan(0.0, $latestValue, "getLatestValue should be > 0 when window_size equals observation_period");
     }
 
     /**
