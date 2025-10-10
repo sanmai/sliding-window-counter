@@ -199,8 +199,10 @@ class SlidingWindowCounter
                 $previous_frame = $frame;
 
                 // To avoid aliasing artifacts, we don't extrapolate the oldest frame
-                // getFrameOverlap() references a frame before this one that we don't have
-                // Even if we assumed that non-existent frame had the same value, it could be completely wrong
+                // Extrapolation requires both the previous and current frame for weighted calculation
+                // E.g. getFrameOverlap() references a frame before this one that we don't have
+                // Even if we assumed that the non-existent frame had the same value, it could be completely wrong
+                // (What if it has a very large value? What if it had a very small value?)
                 continue;
             }
 
