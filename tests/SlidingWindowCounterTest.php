@@ -391,7 +391,6 @@ final class SlidingWindowCounterTest extends TestCase
         ?int $end_time = null
     ): array {
         $method = new ReflectionMethod($counter, 'generateMaterialFrames');
-        $method->setAccessible(true);
 
         $pipeline = $method->invoke(
             $counter,
