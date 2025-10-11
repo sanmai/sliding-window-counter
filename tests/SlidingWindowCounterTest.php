@@ -402,6 +402,6 @@ final class SlidingWindowCounterTest extends TestCase
 
         return take($pipeline)
             ->cast(fn (Frame $frame) => $frame->getValue())
-            ->toArrayPreservingKeys();
+            ->toAssoc();
     }
 }
