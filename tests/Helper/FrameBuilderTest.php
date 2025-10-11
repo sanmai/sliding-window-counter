@@ -217,4 +217,18 @@ final class FrameBuilderTest extends TestCase
             $this->fail("Should not have generated frame {$frame->getStart()}");
         }
     }
+
+    /** Test newFrame creates a frame with the correct time and window size */
+    public function testNewFrame(): void
+    {
+        $window_size = 60;
+        $builder = new FrameBuilder($window_size, 360, new TimeSpy(997));
+
+        $time = 1234;
+        $frame = $builder->newFrame($time);
+
+        $this->assertInstanceOf(Frame::class, $frame);
+        $this->assertSame($time, $frame->getTime());
+        $this->assertSame(1200, $frame->getStart(), 'Frame start should be aligned to window boundary (1234 - 1234%60 = 1200)');
+    }
 }
