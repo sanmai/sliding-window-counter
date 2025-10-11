@@ -213,6 +213,7 @@ final class FrameBuilderTest extends TestCase
     {
         $builder = new FrameBuilder(60, 360, new TimeSpy(997));
         $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('End time cannot be before start time');
         foreach ($builder->generateFrames(100, 99) as $frame) {
             $this->fail("Should not have generated frame {$frame->getStart()}");
         }

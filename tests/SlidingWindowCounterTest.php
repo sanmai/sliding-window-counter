@@ -24,6 +24,7 @@ namespace Tests\SlidingWindowCounter;
 
 use SlidingWindowCounter\Cache\CounterCache;
 use SlidingWindowCounter\Helper\Frame;
+use SlidingWindowCounter\Helper\FrameBuilder;
 use SlidingWindowCounter\SlidingWindowCounter;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
@@ -311,6 +312,32 @@ final class SlidingWindowCounterTest extends TestCase
         $this->assertGreaterThan(60.0, $counter->getLatestValue($bucket_key));
 
         $this->assertTrue($counter->detectAnomaly($bucket_key, 3)->isAnomaly(), 'Anomaly not detected');
+    }
+
+    /** Test that constructor uses provided frame_builder instead of creating new one */
+    public function testFrameBuilderDependencyInjection(): void
+    {
+        $window_size = 60;
+        $time_keeper = new TimeSpy(1000);
+
+        $custom_frame_builder = $this->createMock(FrameBuilder::class);
+        $custom_frame_builder
+            ->expects($this->once())
+            ->method('newFrame')
+            ->with($time_keeper->time())
+            ->willReturn(new Frame($time_keeper->time(), $window_size));
+
+        $counter = new SlidingWindowCounter(
+            'test',
+            $window_size,
+            120,
+            new FakeCache(),
+            $time_keeper,
+            $custom_frame_builder
+        );
+
+        // This increment should use the mocked frame_builder
+        $counter->increment('test', 10);
     }
 
     /**
