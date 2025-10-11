@@ -106,7 +106,7 @@ class FrameBuilder
         }
 
         do {
-            // Keying to start time for legacy reasons
+            // Key is the material frame's start time (aligned to window boundary)
             yield $start_time => $this->newFrame($start_time + $window_boundary);
             $start_time += $this->window_size;
         } while ($start_time <= $end_time);
