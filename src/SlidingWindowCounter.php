@@ -29,8 +29,10 @@ use DuoClock\DuoClock;
 use DuoClock\Interfaces\DuoClockInterface;
 
 use function is_int;
+use function iterator_to_array;
 use function Pipeline\take;
 use function sprintf;
+use function count;
 
 /**
  * Sliding window counter and time series.
@@ -191,9 +193,22 @@ class SlidingWindowCounter
         /** @var null|Helper\Frame $previous_frame */
         $previous_frame = null;
 
-        $has_yielded = false;
+        $frames = take($this->generateMaterialFrames($bucket_key, $start_time, $end_time));
 
-        foreach ($this->generateMaterialFrames($bucket_key, $start_time, $end_time) as $frame) {
+        $first_two = take($frames->peek(2))->toList();
+
+        // Fallback: if only one frame exists, return its raw value without extrapolation.
+        // This is safe because we're not making assumptions about distribution - just returning what we have
+        // Similar to how we handle the most recent frame below.
+        if (count($first_two) === 1) {
+            $frame = $first_two[0];
+            yield $frame->getTime() => $frame->getValue();
+            return;
+        }
+
+        $frames->prepend($first_two);
+
+        foreach ($frames as $frame) {
             /** @var Helper\Frame $frame */
             if (null === $previous_frame) {
                 $previous_frame = $frame;
@@ -228,16 +243,8 @@ class SlidingWindowCounter
             }
 
             yield $frame->getTime() => $full_value;
-            $has_yielded = true;
 
             $previous_frame = $frame;
-        }
-
-        // Fallback: if only one frame exists, return its raw value without extrapolation.
-        // This is safe because we're not making assumptions about distribution - just returning what we have
-        // Similar to how we handle the most recent frame above.
-        if (null !== $previous_frame && !$has_yielded) {
-            yield $previous_frame->getTime() => $previous_frame->getValue();
         }
     }
 
