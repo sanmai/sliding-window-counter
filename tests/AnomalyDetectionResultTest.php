@@ -153,4 +153,33 @@ final class AnomalyDetectionResultTest extends TestCase
         $this->assertSame($expected_is_anomaly, $result->isAnomaly(), 'Unexpected anomaly result');
         $this->assertSame($expected_direction, $result->getDirection(), 'Unexpected direction');
     }
+
+    /** Test that ceil is used for high boundary, not round */
+    public function testCeilUsedForHighBoundary(): void
+    {
+        // mean=10, std_dev=1.5, sensitivity=1 -> high = ceil(10 + 1.5) = ceil(11.5) = 12
+        $result = new AnomalyDetectionResult(100, 1.5, 10.0, 11.6, 1);
+
+        $this->assertSame(12.0, $result->getHigh(), 'High should use ceil, not round');
+        $this->assertFalse($result->isAnomaly(), 'Value within range should not be anomaly');
+    }
+
+    /** Test that floor is used for low boundary, not round */
+    public function testFloorUsedForLowBoundary(): void
+    {
+        // mean=10, std_dev=1.5, sensitivity=1 -> low = floor(10 - 1.5) = floor(8.5) = 8
+        $result = new AnomalyDetectionResult(100, 1.5, 10.0, 8.4, 1);
+
+        $this->assertSame(8.0, $result->getLow(), 'Low should use floor, not round');
+        $this->assertFalse($result->isAnomaly(), 'Value within range should not be anomaly');
+    }
+
+    /** Test that hops uses division, not multiplication */
+    public function testHopsUsesDivision(): void
+    {
+        // std_dev=2, mean=10, latest=16 -> hops = abs(10-16)/2 = 6/2 = 3
+        $result = new AnomalyDetectionResult(100, 2.0, 10.0, 16.0, 1);
+
+        $this->assertSame(3.0, $result->getHops(), 'Hops should use division by std_dev');
+    }
 }

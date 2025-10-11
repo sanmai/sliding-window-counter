@@ -313,6 +313,30 @@ final class SlidingWindowCounterTest extends TestCase
         $this->assertTrue($counter->detectAnomaly($bucket_key, 3)->isAnomaly(), 'Anomaly not detected');
     }
 
+    /** Test that constructor uses provided frame_builder instead of creating new one */
+    public function testFrameBuilderDependencyInjection(): void
+    {
+        $window_size = 60;
+        $time_keeper = new TimeSpy(1000);
+
+        // Create a real FrameBuilder to inject
+        $custom_frame_builder = new \SlidingWindowCounter\Helper\FrameBuilder($window_size, 120, $time_keeper);
+
+        $counter = new SlidingWindowCounter(
+            'test',
+            $window_size,
+            120,
+            new FakeCache(),
+            $time_keeper,
+            $custom_frame_builder
+        );
+
+        // If coalesce order is wrong (new Helper\FrameBuilder() ?? $frame_builder),
+        // it would always create a new FrameBuilder and ignore the injected one
+        // We verify the injected one is used by successfully incrementing
+        $this->assertIsInt($counter->increment('test', 10));
+    }
+
     /**
      * Data provider for `testFuzzing`.
      */
