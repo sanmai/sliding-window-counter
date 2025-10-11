@@ -231,4 +231,15 @@ final class FrameBuilderTest extends TestCase
         $this->assertSame($time, $frame->getTime());
         $this->assertSame(1200, $frame->getStart(), 'Frame start should be aligned to window boundary (1234 - 1234%60 = 1200)');
     }
+
+    /** Test generateFrames yields keys matching frame start times */
+    public function testGenerateFramesYieldsStartTimeKeys(): void
+    {
+        $window_size = 60;
+        $builder = new FrameBuilder($window_size, 360, new TimeSpy(997));
+
+        foreach ($builder->generateFrames(800, 950) as $key => $frame) {
+            $this->assertSame($frame->getStart(), $key, 'Yielded key should match frame start time');
+        }
+    }
 }
