@@ -24,6 +24,7 @@ namespace Tests\SlidingWindowCounter;
 
 use SlidingWindowCounter\Cache\CounterCache;
 use SlidingWindowCounter\Helper\Frame;
+use SlidingWindowCounter\Helper\FrameBuilder;
 use SlidingWindowCounter\SlidingWindowCounter;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
@@ -319,8 +320,13 @@ final class SlidingWindowCounterTest extends TestCase
         $window_size = 60;
         $time_keeper = new TimeSpy(1000);
 
-        // Create a real FrameBuilder to inject
-        $custom_frame_builder = new \SlidingWindowCounter\Helper\FrameBuilder($window_size, 120, $time_keeper);
+        // Create a mock FrameBuilder that expects newFrame to be called
+        $custom_frame_builder = $this->createMock(FrameBuilder::class);
+        $custom_frame_builder
+            ->expects($this->once())
+            ->method('newFrame')
+            ->with($time_keeper->time())
+            ->willReturn(new \SlidingWindowCounter\Helper\Frame($time_keeper->time(), $window_size));
 
         $counter = new SlidingWindowCounter(
             'test',
@@ -333,8 +339,8 @@ final class SlidingWindowCounterTest extends TestCase
 
         // If coalesce order is wrong (new Helper\FrameBuilder() ?? $frame_builder),
         // it would always create a new FrameBuilder and ignore the injected one
-        // We verify the injected one is used by successfully incrementing
-        $this->assertIsInt($counter->increment('test', 10));
+        // This increment should use the mocked frame_builder
+        $counter->increment('test', 10);
     }
 
     /**
