@@ -320,13 +320,12 @@ final class SlidingWindowCounterTest extends TestCase
         $window_size = 60;
         $time_keeper = new TimeSpy(1000);
 
-        // Create a mock FrameBuilder that expects newFrame to be called
         $custom_frame_builder = $this->createMock(FrameBuilder::class);
         $custom_frame_builder
             ->expects($this->once())
             ->method('newFrame')
             ->with($time_keeper->time())
-            ->willReturn(new \SlidingWindowCounter\Helper\Frame($time_keeper->time(), $window_size));
+            ->willReturn(new Frame($time_keeper->time(), $window_size));
 
         $counter = new SlidingWindowCounter(
             'test',
@@ -337,8 +336,6 @@ final class SlidingWindowCounterTest extends TestCase
             $custom_frame_builder
         );
 
-        // If coalesce order is wrong (new Helper\FrameBuilder() ?? $frame_builder),
-        // it would always create a new FrameBuilder and ignore the injected one
         // This increment should use the mocked frame_builder
         $counter->increment('test', 10);
     }
