@@ -341,6 +341,69 @@ final class SlidingWindowCounterTest extends TestCase
     }
 
     /**
+     * Test `getLatestValue` when window_size equals observation_period.
+     *
+     * This is the edge case where only one material frame can exist at a time,
+     * because the observation period doesn't extend far enough back to include
+     * a previous frame. The fix ensures we return the single frame's value
+     * instead of returning 0.
+     */
+    public function testWindowSizeEqualsObservationPeriod(): void
+    {
+        $window_size = 60;
+        $observation_period = 60;
+        $now = $window_size * 100 + 30; // = 6030, 30 seconds into the current frame
+        $bucket_key = 'equal-window';
+
+        $time_keeper = new TimeSpy($now);
+        $counter = new SlidingWindowCounter('default', $window_size, $observation_period, new FakeCache(), $time_keeper);
+
+        // Both increments fall into the same material frame (6000-6060)
+        $counter->increment($bucket_key, 20, $now - 10);
+        $counter->increment($bucket_key, 30);
+
+        $latestValue = $counter->getLatestValue($bucket_key);
+
+        // The result should be greater than the larger single increment
+        $this->assertGreaterThan(30.0, $latestValue, "getLatestValue should account for both increments");
+
+        // The result should not exceed the sum of both increments
+        $this->assertLessThanOrEqual(50.0, $latestValue, "getLatestValue should not exceed the sum");
+
+        // Most importantly, verify the value is non-zero (the bug being fixed)
+        $this->assertGreaterThan(0.0, $latestValue, "getLatestValue should be > 0 when window_size equals observation_period");
+    }
+
+    /**
+     * Test `getLatestValue` with two material frames available.
+     *
+     * This tests the normal extrapolation case where we have both the previous
+     * and current frame available for weighted calculation.
+     */
+    public function testWindowSizeWithTwoFrames(): void
+    {
+        $window_size = 60;
+        $observation_period = 120; // 2x window_size ensures two frames are available
+        $now = $window_size * 100 + 30; // = 6030, 30 seconds into the current frame
+        $bucket_key = 'two-frames';
+
+        $time_keeper = new TimeSpy($now);
+        $counter = new SlidingWindowCounter('default', $window_size, $observation_period, new FakeCache(), $time_keeper);
+
+        // Increment in previous material frame (5940-6000)
+        $counter->increment($bucket_key, 20, $now - 50);
+
+        // Increment in current material frame (6000-6060)
+        $counter->increment($bucket_key, 30);
+
+        $latestValue = $counter->getLatestValue($bucket_key);
+
+        // With two frames, we should get extrapolated value
+        $this->assertGreaterThan(30.0, $latestValue, "getLatestValue should account for both increments across frames");
+        $this->assertLessThan(50.0, $latestValue, "getLatestValue should be less than sum due to extrapolation");
+    }
+
+    /**
      * Data provider for `testFuzzing`.
      */
     public static function provideFuzzySeconds(): iterable

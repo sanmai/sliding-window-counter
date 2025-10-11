@@ -31,6 +31,7 @@ use DuoClock\Interfaces\DuoClockInterface;
 use function is_int;
 use function Pipeline\take;
 use function sprintf;
+use function count;
 
 /**
  * Sliding window counter and time series.
@@ -191,13 +192,31 @@ class SlidingWindowCounter
         /** @var null|Helper\Frame $previous_frame */
         $previous_frame = null;
 
-        foreach ($this->generateMaterialFrames($bucket_key, $start_time, $end_time) as $frame) {
+        $frames = take($this->generateMaterialFrames($bucket_key, $start_time, $end_time));
+
+        $first_two = take($frames->peek(2))->toList();
+
+        // Fallback: if only one frame exists, return its raw value without extrapolation.
+        // This is safe because we're not making assumptions about distribution - just returning what we have
+        // Similar to how we handle the most recent frame below.
+        if (count($first_two) === 1) {
+            $frame = $first_two[0];
+            yield $frame->getTime() => $frame->getValue();
+            return;
+        }
+
+        $frames->prepend($first_two);
+
+        foreach ($frames as $frame) {
             /** @var Helper\Frame $frame */
             if (null === $previous_frame) {
                 $previous_frame = $frame;
 
-                // To avoid aliasing artifacts we don't approximate the value for the oldest frame
-                // There could be a way to solve this issue, but for now we skip all initial frames
+                // To avoid aliasing artifacts, we don't extrapolate the oldest frame
+                // Extrapolation requires both the previous and current frame for weighted calculation
+                // E.g. getFrameOverlap() references a frame before this one that we don't have
+                // Even if we assumed that the non-existent frame had the same value, it could be completely wrong
+                // (What if it has a very large value? What if it had a very small value?)
                 continue;
             }
 

@@ -15,7 +15,7 @@
     "require": {
         "php": ">=8.2",
         "sanmai/duoclock": "^0.1.0",
-        "sanmai/pipeline": "^6.22 || ^7.0"
+        "sanmai/pipeline": "^7.4"
     },
     "require-dev": {
         "ext-memcached": "*",
