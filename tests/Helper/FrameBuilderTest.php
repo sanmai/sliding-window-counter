@@ -178,7 +178,7 @@ final class FrameBuilderTest extends TestCase
     ): void {
         $builder = new FrameBuilder($window_size, $observation_period, new TimeSpy($now));
 
-        $frame_starts = take($builder->generateFrames($start_time, $end_time))->cast(fn (Frame $frame) => $frame->getStart())->toArray();
+        $frame_starts = take($builder->generateFrames($start_time, $end_time))->cast(fn (Frame $frame) => $frame->getStart())->toList();
 
         $this->assertLessThanOrEqual($now, max($frame_starts));
 
