@@ -29,7 +29,6 @@ use DuoClock\DuoClock;
 use DuoClock\Interfaces\DuoClockInterface;
 
 use function is_int;
-use function iterator_to_array;
 use function Pipeline\take;
 use function sprintf;
 use function count;
