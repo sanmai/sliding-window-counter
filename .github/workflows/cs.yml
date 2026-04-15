@@ -30,7 +30,7 @@ jobs:
 
       - name: Cache Composer packages
         id: composer-cache
-        uses: actions/cache@v3
+        uses: actions/cache@v5
         with:
           path: ~/.cache/composer
           key: composer-${{ matrix.php-version }}-${{ hashFiles('composer.*') }}
@@ -51,7 +51,7 @@ jobs:
           composer normalize --dry-run --diff
 
       - name: Restore PHP-CS-Fixer cache
-        uses: actions/cache@v3
+        uses: actions/cache@v5
         with:
           path: build/cache/.php_cs.cache
           key: php-cs-fixer-${{ matrix.php-version }}-${{ hashFiles('composer.*') }}
